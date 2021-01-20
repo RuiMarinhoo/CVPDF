@@ -7,19 +7,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  writeOpacity = 1;
-
   constructor() { }
 
-  ngOnInit(): void {
-    setInterval(() => {
-      if (this.writeOpacity === 0){
-        this.writeOpacity = 1;
-      }
-      else{
-        this.writeOpacity = 0;
-      }
-    }, 500);
-  }
+  ngOnInit(): void { }
 
 }

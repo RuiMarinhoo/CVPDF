@@ -24,16 +24,6 @@
   width: 100%;
 }
 
-.cvImg .card .writeCV{
-  position: absolute;
-  top: 248pt;
-  right: 100pt;
-  width: 4pt;
-  height: 10pt;
-  background-color: #58595b;
-  transition: 0.5s;
-}
-
 .btnCreate{
   display: flex;
   justify-content: center;
