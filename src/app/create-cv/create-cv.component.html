@@ -1,5 +1,25 @@
 <p>create-cv works!</p>
 
-<div style="width: 200px; height: 100px" (click)="change()"> click </div>
+<form [formGroup]="checkoutForm">
 
-<app-template-cv #apptemplate></app-template-cv>
+  <div>
+    <label for="name">
+      Name
+    </label>
+    <input id="name" type="text" formControlName="name" (focusout)="changeData()">
+  </div>
+
+  <div>
+    <label for="address">
+      Address
+    </label>
+    <input id="address" type="text" formControlName="address">
+  </div>
+
+  <button class="button" type="submit">Purchase</button>
+
+</form>
+
+<div class="container" #cv></div>
+
+<!--<app-template-cv #apptemplate></app-template-cv>-->

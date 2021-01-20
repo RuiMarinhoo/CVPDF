@@ -8,6 +8,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {SafeHtmlPipe, TemplateCVComponent} from './template-cv/template-cv.component';
 import {HttpClientModule} from '@angular/common/http';
 import { CreateCVComponent } from './create-cv/create-cv.component';
+import { F1Component } from './allTemplates/f1/f1.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -18,13 +20,15 @@ import { CreateCVComponent } from './create-cv/create-cv.component';
     SafeHtmlPipe,
     CreateCVComponent,
   ],
-    imports: [
-      BrowserModule,
-      RouterModule.forRoot([]),
-      AppRoutingModule,
-      RouterModule,
-      HttpClientModule
-    ],
+  entryComponents: [F1Component],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot([]),
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
