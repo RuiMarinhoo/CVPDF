@@ -15,6 +15,23 @@
   color: #343434;
 }
 
+.BG{
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: url('../assets/img/bgCV.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center top;
+}
+
+.page-footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 @media (max-width: 992px) {
   #navbarNav {
     position: absolute;
@@ -30,5 +47,21 @@
 
   .navbar-light .navbar-nav .nav-link {
     color: aliceblue;
+  }
+
+  .BG{
+    overflow: auto;
+    background-size: 100% auto;
+  }
+
+  .page-footer{
+    position: relative;
+  }
+}
+
+@media (max-width: 768px) {
+  .BG {
+    background-image: url('../assets/img/bgCVM.jpg');
+    background-size: 100% auto;
   }
 }

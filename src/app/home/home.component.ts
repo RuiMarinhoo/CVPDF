@@ -10,6 +10,8 @@ export class HomeComponent implements OnInit {
 
   users = [{name: 'Rui', age: '26'}, {name: 'Ricardo', age: '26'}];
 
+  icons = true;
+
   constructor(private router: Router) {
     console.table(this.users);
   }
@@ -18,6 +20,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate([nav]);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    if (window.innerWidth <= 992){
+      this.icons = false;
+    }
+  }
 
 }

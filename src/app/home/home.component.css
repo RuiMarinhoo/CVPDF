@@ -1,11 +1,11 @@
 
 #home{
-  position: relative;
-  overflow: hidden;
-  background-image: url('../../assets/img/bgCV.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position: center top;
+  /*position: relative;*/
+  /*overflow: hidden;*/
+  /*background-image: url('../../assets/img/bgCV.jpg');*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: 100% 100%;*/
+  /*background-position: center top;*/
 }
 
 img{
@@ -48,8 +48,12 @@ img{
 .cvImg .person{
   text-align: center;
 }
-.cvImg .person img{
+.cvImg .person img, .cvImg .iconsCode img{
   width: 100%;
+}
+
+.cvImg .iconsCode{
+  margin-top: -70px;
 }
 
 .btnCreate{
@@ -86,15 +90,20 @@ img{
 
 @media (max-width: 992px) {
   #home{
-    overflow: auto;
+    /*overflow: auto;*/
+    /*background-size: 100% auto;*/
+  }
+
+  .cvImg .iconsCode{
+    margin-top: 50px;
   }
 }
 
 
 @media (max-width: 768px) {
   #home{
-    background-image: url('../../assets/img/bgCVM.jpg');
-    height: auto;
+    /*background-image: url('../../assets/img/bgCVM.jpg');*/
+    /*background-size: 100% auto;*/
   }
 
   .cvContainer{
