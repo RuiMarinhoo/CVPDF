@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,15 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  users = [{name: 'Rui', age: '26'}, {name: 'Ricardo', age: '26'}];
+
+  constructor(private router: Router) {
+    console.table(this.users);
+  }
+
+  goTo(nav){
+    this.router.navigate([nav]);
+  }
 
   ngOnInit(): void { }
 
