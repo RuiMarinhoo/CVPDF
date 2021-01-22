@@ -30,6 +30,7 @@ import {DragScrollModule} from 'ngx-drag-scroll';
     HttpClientModule,
     ReactiveFormsModule,
     DragScrollModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

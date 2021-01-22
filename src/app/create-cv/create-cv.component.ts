@@ -2,8 +2,6 @@ import {AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, OnInit
 import {F1Component} from '../allTemplates/f1/f1.component';
 import {FormBuilder} from '@angular/forms';
 import {CVDataService} from '../cvdata.service';
-import jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
 
 const componentsRegistry = {
   F1: F1Component
@@ -33,22 +31,9 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
     this.template.instance.getData();
   }
 
-  captureScreen() {
-    const data = document.getElementById('page');
-    html2canvas(data).then(canvas => {
-      const imgWidth = 208;
-      const pageHeight = 295;
-      const imgHeight = canvas.height * imgWidth / canvas.width;
-      const heightLeft = imgHeight;
-
-      const contentDataURL = canvas.toDataURL('image/png');
-      const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      pdf.internal.scaleFactor = 30;
-      const position = 0;
-      console.log(contentDataURL);
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('MYPdf.pdf'); // Generated PDF
-    });
+  async captureScreen() {
+    const pdf = await this.dataS.getPDF();
+    console.log(pdf);
   }
 
   ngAfterViewInit() {
