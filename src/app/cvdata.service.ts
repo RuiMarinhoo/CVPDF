@@ -18,7 +18,7 @@ export class CVDataService {
   }
 
   getPDF(){
-    return this.http.get('https://cvserver.azurewebsites.net/users', { responseType: 'text' })
+    return this.http.get('/users', { responseType: 'text' })
       .toPromise().then(value => {
         return value;
     });
