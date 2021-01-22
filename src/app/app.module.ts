@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { CreateCVComponent } from './create-cv/create-cv.component';
 import { F1Component } from './allTemplates/f1/f1.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {DragScrollModule} from 'ngx-drag-scroll';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragScrollModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

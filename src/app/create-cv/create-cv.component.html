@@ -1,25 +1,64 @@
-<p>create-cv works!</p>
 
-<form [formGroup]="checkoutForm">
+<div id="createCV">
 
-  <div>
-    <label for="name">
-      Name
-    </label>
-    <input id="name" type="text" formControlName="name" (focusout)="changeData()">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <drag-scroll [scrollbar-hidden]="true">
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+          <img drag-scroll-item src="assets/img/cvP.gif" />
+        </drag-scroll>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-7">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="checkoutForm">
+
+              <div>
+                <label for="name">
+                  Name
+                </label>
+                <input id="name" type="text" formControlName="name" (focusout)="changeData()">
+              </div>
+
+              <div>
+                <label for="address">
+                  Address
+                </label>
+                <input id="address" type="text" formControlName="address">
+              </div>
+
+              <button class="button" type="submit">Purchase</button>
+
+            </form>
+            <div (click)="captureScreen()">Click</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <div id="cv" class="container" #cv></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div>
-    <label for="address">
-      Address
-    </label>
-    <input id="address" type="text" formControlName="address">
-  </div>
-
-  <button class="button" type="submit">Purchase</button>
-
-</form>
-
-<div class="container" #cv></div>
 
 <!--<app-template-cv #apptemplate></app-template-cv>-->
