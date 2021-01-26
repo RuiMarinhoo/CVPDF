@@ -1,4 +1,10 @@
 
+#allPage{
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
 #navbarNav{
   margin-top: -40px;
 }
@@ -17,7 +23,7 @@
 
 .BG{
   position: relative;
-  min-height: 100vh;
+  flex: 1 1 auto;
   overflow: hidden;
   background-image: url('../assets/img/bgCV.jpg');
   background-repeat: no-repeat;
@@ -26,10 +32,12 @@
 }
 
 .page-footer{
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  /*position: absolute;*/
+  /*right: 0;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  flex: 0 1 40px;
 }
 
 @media (max-width: 992px) {
@@ -54,9 +62,9 @@
     background-size: 100% auto;
   }
 
-  .page-footer{
-    position: relative;
-  }
+  /*.page-footer{*/
+  /*  position: relative;*/
+  /*}*/
 }
 
 @media (max-width: 768px) {

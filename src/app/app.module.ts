@@ -11,6 +11,9 @@ import { CreateCVComponent } from './create-cv/create-cv.component';
 import { F1Component } from './allTemplates/f1/f1.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DragScrollModule} from 'ngx-drag-scroll';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -19,7 +22,7 @@ import {DragScrollModule} from 'ngx-drag-scroll';
     HomeComponent,
     TemplateCVComponent,
     SafeHtmlPipe,
-    CreateCVComponent,
+    CreateCVComponent
   ],
   entryComponents: [F1Component],
   imports: [
@@ -31,6 +34,9 @@ import {DragScrollModule} from 'ngx-drag-scroll';
     ReactiveFormsModule,
     DragScrollModule,
     HttpClientModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

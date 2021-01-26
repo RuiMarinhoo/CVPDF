@@ -1,7 +1,19 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {F1Component} from '../allTemplates/f1/f1.component';
 import {FormBuilder} from '@angular/forms';
 import {CVDataService} from '../cvdata.service';
+import {DomSanitizer, SafeHtml, SafeResourceUrl} from '@angular/platform-browser';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 const componentsRegistry = {
   F1: F1Component
@@ -14,56 +26,104 @@ const componentsRegistry = {
 })
 export class CreateCVComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('cv', {read: ViewContainerRef}) content: ViewContainerRef;
+  stateCreation = 0;
+
+  imgWlayouts = 0;
+  imgHlayoutsCont = 0;
 
   checkoutForm = this.formBuilder.group({
     name: '',
-    address: ''
+    address: '',
+    phone: '',
+    email: ''
   });
 
-  template;
+  // url = 'https://cvserverapp.herokuapp.com/generateCV/render';
+  // url = 'http://localhost:3000/generateCV/render';
+  // urlSafe: SafeResourceUrl;
+  url;
+  htmlSrc: SafeHtml;
 
-  constructor( private componentFactory: ComponentFactoryResolver, private formBuilder: FormBuilder, private dataS: CVDataService) { }
+  template = '';
+  cvView = false;
 
-  changeData(){
-    console.log(this.checkoutForm.getRawValue());
-    this.dataS.setData(this.checkoutForm.getRawValue());
-    this.template.instance.getData();
+  faSearch = faSearch;
+
+  todo = [
+    'Get to work',
+    'Pick up groceries',
+    'Go home',
+    'Fall asleep'
+  ];
+
+  done = [
+    'Get up',
+    'Brush teeth',
+    'Take a shower',
+    'Check e-mail',
+    'Walk dog'
+  ];
+
+  constructor( private componentFactory: ComponentFactoryResolver, private formBuilder: FormBuilder, private dataS: CVDataService, public sanitizer: DomSanitizer) { }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
   }
 
-  async captureScreen() {
-    const pdf = await this.dataS.getPDF();
-    console.log(pdf);
+  async getTemplateRender(){
+    this.url = await this.dataS.renderPDF(this.template, this.checkoutForm.getRawValue());
+    // console.log(this.url);
+    this.htmlSrc = this.sanitizer.bypassSecurityTrustHtml(this.url);
+  }
+
+  changeTemplate(template){
+    this.template = template;
+    this.getTemplateRender();
+  }
+  selectTemplate(){
+    this.stateCreation = 1;
   }
 
   ngAfterViewInit() {
-    setTimeout(() => { this.loadComponents('F1'); }, 500);
-  }
-
-  loadComponents(componentName) {
-    // Fetch components to display from the backend.
-    // const components = [
-    //   { componentName: 'F1' }
-    // ];
-    // Insert...
-    let componentClass;
-    let componentFactory;
-    // for (const c of components) {
-    //   // Get the actual class for the current component.
-    //   componentClass = componentsRegistry[c.componentName];
-    //   // Get a factory for the current component.
-    //   componentFactory = this.componentFactory.resolveComponentFactory(componentClass);
-    //   // Insert the component at the anchor point.
-    //   this.content.createComponent(componentFactory);
-    // }
-
-    componentClass = componentsRegistry[componentName];
-    componentFactory = this.componentFactory.resolveComponentFactory(componentClass);
-    this.template = this.content.createComponent(componentFactory);
-
+    // setTimeout(() => { this.loadComponents('F1'); }, 500);
   }
 
   ngOnInit(): void {
+    console.log(window.innerHeight);
+    this.getTemplateRender();
+    const w = window.innerWidth;
+    let contWidth;
+    let nSlides;
+    if (w < 576){
+      contWidth = window.innerWidth;
+      nSlides = 3;
+    }
+    if (w >= 576){
+      contWidth = 540;
+      nSlides = 2;
+    }
+    if (w >= 768){
+      contWidth = 720;
+      nSlides = 2;
+    }
+    if (w >= 992){
+      contWidth = 960;
+      nSlides = 3;
+    }
+    if (w >= 1200){
+      contWidth = 1140;
+      nSlides = 3;
+    }
+    console.log(contWidth);
+    this.imgWlayouts = (contWidth / nSlides) - 20;
+    this.imgHlayoutsCont = ((this.imgWlayouts * 842) / 595) + 60;
   }
 
 }

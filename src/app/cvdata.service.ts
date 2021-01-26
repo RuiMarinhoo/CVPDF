@@ -17,6 +17,13 @@ export class CVDataService {
     return this.allCvData;
   }
 
+  renderPDF(m, d){
+    return this.http.post('http://localhost:3000/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
+      .toPromise().then(value => {
+        return value;
+      });
+  }
+
   getPDF(){
     return this.http.get('https://cvserver.azurewebsites.net/users', { responseType: 'text' })
       .toPromise().then(value => {
