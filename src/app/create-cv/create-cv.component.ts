@@ -12,8 +12,11 @@ import {F1Component} from '../allTemplates/f1/f1.component';
 import {FormBuilder} from '@angular/forms';
 import {CVDataService} from '../cvdata.service';
 import {DomSanitizer, SafeHtml, SafeResourceUrl} from '@angular/platform-browser';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {LayoutService} from './templates/layout.service';
+import {loadConfigurationFromPath} from 'tslint/lib/configuration';
+import {ImageCroppedEvent} from 'ngx-image-cropper';
 
 const componentsRegistry = {
   F1: F1Component
@@ -44,43 +47,124 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   url;
   htmlSrc: SafeHtml;
 
-  template = '';
+  // template = '';
+  template = 'f1';
   cvView = false;
 
   faSearch = faSearch;
+  faPlusCircle = faPlusCircle;
+  faTimes = faTimes;
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
+  panelOpenState = false;
+  toAdd = [];
 
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  onCV: any = [];
 
-  constructor( private componentFactory: ComponentFactoryResolver, private formBuilder: FormBuilder, private dataS: CVDataService, public sanitizer: DomSanitizer) { }
+  constructor(
+    private componentFactory: ComponentFactoryResolver,
+    private formBuilder: FormBuilder,
+    private dataS: CVDataService,
+    public sanitizer: DomSanitizer,
+    private layout: LayoutService) { }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
     }
   }
 
+  noReturnPredicate() {
+    return false;
+  }
+
+  addToCV(item){
+    if (!this.onCV.includes(item)){
+      if (['Foto'].includes(item)){
+        this.onCV.push({control: item, value: '', position: false});
+      }
+      else if (['Nome', 'Morada', 'Contacto', 'E-mail', 'Perfil'].includes(item)){
+        this.onCV.push({control: item, value: '', position: false});
+      }
+      else if (['Linguas', 'Skills'].includes(item)){
+        this.onCV.push({control: item, value: [], position: false});
+      }
+      else if (['Personalidade', 'Certificados'].includes(item)){
+        this.onCV.push({control: item, value: [], position: false});
+      }
+      else if (['Hobbies'].includes(item)){
+        this.onCV.push({control: item, value: [], position: false});
+      }
+      else if (['Educacao', 'Experiencia'].includes(item)){
+        this.onCV.push({control: item, value: [], position: false});
+      }
+    }
+    // console.log(this.onCV);
+    this.getTemplateRender();
+  }
+  removeToCV(item){
+    this.onCV.splice(item, 1);
+  }
+
+  loadLists(){
+    const vars: any = this.layout.getVariaveis(this.template);
+    vars.forEach( val => {
+      this.toAdd.push(val);
+    });
+  }
+
+  addItem(i){
+    console.log(i);
+    if (['Linguas', 'Skills'].includes(this.onCV[i].control)){
+      this.onCV[i].value.push({tipo: '', value: ''});
+    }
+    else if (['Personalidade', 'Hobbies', 'Certificados'].includes(this.onCV[i].control)){
+      this.onCV[i].value.push({value: ''});
+    }
+    else if (['Educacao', 'Experiencia'].includes(this.onCV[i].control)){
+      this.onCV[i].value.push({data: '', local: '', texto: ''});
+    }
+  }
+  removeItem(item){
+    this.onCV.splice(item, 1);
+  }
+
+  onInputChange(value, index){
+    console.log(value);
+    this.onCV[index].value = value;
+  }
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+    const index = this.onCV.findIndex(x => x.control === 'Foto');
+    this.onCV[index].value = event.base64;
+    this.getTemplateRender();
+  }
+  imageLoaded(image: HTMLImageElement) {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+
   async getTemplateRender(){
-    this.url = await this.dataS.renderPDF(this.template, this.checkoutForm.getRawValue());
+    console.log(this.onCV);
+    const html = this.layout.getHTML(this.onCV);
+    this.url = await this.dataS.renderPDF(this.template, html);
     // console.log(this.url);
     this.htmlSrc = this.sanitizer.bypassSecurityTrustHtml(this.url);
+  }
+
+  sendToPDF(){
+    const html = this.layout.getHTML(this.onCV);
+    console.log(html);
   }
 
   changeTemplate(template){
@@ -91,6 +175,10 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
     this.stateCreation = 1;
   }
 
+  itemOnCV(item){
+    return this.onCV.some(val => val.control === item);
+  }
+
   ngAfterViewInit() {
     // setTimeout(() => { this.loadComponents('F1'); }, 500);
   }
@@ -98,6 +186,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     console.log(window.innerHeight);
     this.getTemplateRender();
+    this.loadLists();
     const w = window.innerWidth;
     let contWidth;
     let nSlides;
