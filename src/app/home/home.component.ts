@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   icons = true;
 
   constructor(private router: Router) {
-    console.table(this.users);
+    // console.table(this.users);
   }
 
   goTo(nav){

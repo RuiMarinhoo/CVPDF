@@ -115,7 +115,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   addItem(i){
-    console.log(i);
+    // console.log(i);
     if (['Linguas', 'Skills'].includes(this.onCV[i].control)){
       this.onCV[i].value.push({tipo: '', value: ''});
     }
@@ -131,7 +131,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   onInputChange(value, index){
-    console.log(value);
+    // console.log(value);
     this.onCV[index].value = value;
   }
 
@@ -155,7 +155,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   async getTemplateRender(){
-    console.log(this.onCV);
+    // console.log(this.onCV);
     const html = this.layout.getHTML(this.onCV);
     this.url = await this.dataS.renderPDF(this.template, html);
     // console.log(this.url);
@@ -184,7 +184,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(window.innerHeight);
+    // console.log(window.innerHeight);
     this.getTemplateRender();
     this.loadLists();
     const w = window.innerWidth;
@@ -210,7 +210,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
       contWidth = 1140;
       nSlides = 3;
     }
-    console.log(contWidth);
+    // console.log(contWidth);
     this.imgWlayouts = (contWidth / nSlides) - 20;
     this.imgHlayoutsCont = ((this.imgWlayouts * 842) / 595) + 60;
   }

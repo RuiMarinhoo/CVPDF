@@ -26,7 +26,7 @@ export class LayoutService {
   constructor() { }
 
   getVariaveis(t){
-    console.log(t);
+    // console.log(t);
     switch (t){
       case 'f1':
         return this[t][0].variaveis;
