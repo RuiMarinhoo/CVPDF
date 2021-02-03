@@ -17,6 +17,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatExpansionModule,
     FormsModule,
     ImageCropperModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

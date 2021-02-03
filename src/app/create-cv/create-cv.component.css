@@ -123,11 +123,18 @@ img {
   padding: 0 15px 15px!important;
 }
 
+/deep/ .mat-tab-header {
+  background: aliceblue;
+  border-radius: 10px 10px 0 0;
+}
+/deep/ .mat-tab-body-content {
+  /*overflow: hidden!important;*/
+}
 
 .example-container {
   width: 100%;
   max-width: 100%;
-  margin: 0 25px 25px 0;
+  /*margin: 0 25px 25px 0;*/
   display: inline-block;
   vertical-align: top;
 }
@@ -292,6 +299,13 @@ img {
 }
 .btn-2 {
   bottom: -55px;
+}
+
+.showCV img{
+  width: 100%;
+  -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
 }
 
 @media (max-width: 1200px) {

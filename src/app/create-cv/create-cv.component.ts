@@ -11,7 +11,7 @@ import {
 import {F1Component} from '../allTemplates/f1/f1.component';
 import {FormBuilder} from '@angular/forms';
 import {CVDataService} from '../cvdata.service';
-import {DomSanitizer, SafeHtml, SafeResourceUrl} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { faSearch, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {LayoutService} from './templates/layout.service';
@@ -45,7 +45,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   // url = 'http://localhost:3000/generateCV/render';
   // urlSafe: SafeResourceUrl;
   url;
-  htmlSrc: SafeHtml;
+  htmlSrc: SafeResourceUrl;
 
   // template = '';
   template = 'f1';
@@ -159,7 +159,10 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
     const html = this.layout.getHTML(this.onCV);
     this.url = await this.dataS.renderPDF(this.template, html);
     // console.log(this.url);
-    this.htmlSrc = this.sanitizer.bypassSecurityTrustHtml(this.url);
+    // console.log(this.url);
+    // this.htmlSrc = this.sanitizer.bypassSecurityTrustHtml(this.url);
+    // this.htmlSrc = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+ this.url);
+    this.htmlSrc = 'data:image/jpg;base64,' + this.url;
   }
 
   sendToPDF(){

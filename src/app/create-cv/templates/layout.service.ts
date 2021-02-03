@@ -156,8 +156,8 @@ export class LayoutService {
         left += this.getClassName(val);
       }
     });
-    console.log(left);
-    console.log(right);
+    // console.log(left);
+    // console.log(right);
     return {left, right};
   }
 
