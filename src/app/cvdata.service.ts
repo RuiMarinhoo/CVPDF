@@ -8,6 +8,10 @@ export class CVDataService {
 
   allCvData: any;
 
+  urlServer = 'https://cvserverapp.herokuapp.com/generateCV';
+  // urlServer = 'http://localhost:3000/generateCV/render';
+  urlRender = '/render';
+
   constructor(private http: HttpClient) { }
 
   setData(data){
@@ -18,15 +22,14 @@ export class CVDataService {
   }
 
   renderPDF(m, d){
-    // return this.http.post('https://cvserverapp.herokuapp.com/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
-    return this.http.post('http://localhost:3000/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
+    return this.http.post(this.urlServer + this.urlRender, {modelo: m, data: d}, { responseType: 'text' })
       .toPromise().then(value => {
         return value;
       });
   }
 
   getPDF(m, d){
-    return this.http.post('http://localhost:3000/generateCV/', {modelo: m, data: d}, { responseType: 'text' })
+    return this.http.post(this.urlServer, {modelo: m, data: d}, { responseType: 'text' })
       .toPromise().then(value => {
         return value;
       });
