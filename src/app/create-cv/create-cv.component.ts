@@ -67,7 +67,8 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private dataS: CVDataService,
     public sanitizer: DomSanitizer,
-    private layout: LayoutService) { }
+    private layout: LayoutService) {
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -165,9 +166,16 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
     this.htmlSrc = 'data:image/jpg;base64,' + this.url;
   }
 
-  sendToPDF(){
+  async getPDF(){
     const html = this.layout.getHTML(this.onCV);
-    console.log(html);
+    this.url = await this.dataS.getPDF(this.template, html);
+    // console.log(this.url);
+    const linkSource = 'data:application/pdf;base64,' + this.url;
+    const downloadLink = document.createElement('a');
+    const fileName = 'CV.pdf';
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
   }
 
   changeTemplate(template){

@@ -155,14 +155,12 @@
         </mat-tab-group>
 
       </div>
-      <div class="d-none d-lg-block col-lg-5">
-        <div class="showCV">
-          <div class="zoomIcon" (click)="cvView = !cvView"><fa-icon [icon]="faSearch"></fa-icon></div>
-<!--          <iframe class="cvView" frameBorder="0" [srcdoc]="htmlSrc"></iframe>-->
-          <img [src]="htmlSrc"/>
-          <div class="btn btn-1" (click)="sendToPDF()">
-            GET CV
-          </div>
+      <div class="d-none d-lg-block col-lg-5 showCV">
+        <div class="zoomIcon" (click)="cvView = !cvView"><fa-icon [icon]="faSearch"></fa-icon></div>
+        <!--          <iframe class="cvView" frameBorder="0" [srcdoc]="htmlSrc"></iframe>-->
+        <img [src]="htmlSrc"/>
+        <div class="btn btn-1" (click)="getPDF()">
+          GET CV
         </div>
       </div>
     </div>

@@ -31,21 +31,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.formCV .colH > div::-webkit-scrollbar {
-  width: 10px;
-}
-/* Track */
-.formCV .colH > div::-webkit-scrollbar-track {
-  background: #cdcdcd;
-}
-/* Handle */
-.formCV .colH > div::-webkit-scrollbar-thumb {
-  background: #3c6bb1;
-}
-/* Handle on hover */
-.formCV .colH > div::-webkit-scrollbar-thumb:hover {
-  background: #1b5bbc;
-}
+
 
 drag-scroll {
   width: 100%;
@@ -111,7 +97,9 @@ img {
   pointer-events: none;
 }
 
-
+.mat-tab-group {
+  height: 100%;
+}
 .mat-expansion-panel-header {
   padding: 0 15px;
 }
@@ -129,6 +117,21 @@ img {
 }
 /deep/ .mat-tab-body-content {
   /*overflow: hidden!important;*/
+}
+/deep/ .mat-tab-body-content::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+/deep/ .mat-tab-body-content::-webkit-scrollbar-track {
+  background: #cdcdcd;
+}
+/* Handle */
+/deep/ .mat-tab-body-content::-webkit-scrollbar-thumb {
+  background: #3c6bb1;
+}
+/* Handle on hover */
+/deep/ .mat-tab-body-content::-webkit-scrollbar-thumb:hover {
+  background: #1b5bbc;
 }
 
 .example-container {
@@ -301,6 +304,9 @@ img {
   bottom: -55px;
 }
 
+.showCV{
+  height: 100%;
+}
 .showCV img{
   width: 100%;
   -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);

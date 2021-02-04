@@ -18,17 +18,17 @@ export class CVDataService {
   }
 
   renderPDF(m, d){
-    return this.http.post('https://cvserverapp.herokuapp.com/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
-    // return this.http.post('http://localhost:3000/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
+    // return this.http.post('https://cvserverapp.herokuapp.com/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
+    return this.http.post('http://localhost:3000/generateCV/render', {modelo: m, data: d}, { responseType: 'text' })
       .toPromise().then(value => {
         return value;
       });
   }
 
-  getPDF(){
-    return this.http.get('/users', { responseType: 'text' })
+  getPDF(m, d){
+    return this.http.post('http://localhost:3000/generateCV/', {modelo: m, data: d}, { responseType: 'text' })
       .toPromise().then(value => {
         return value;
-    });
+      });
   }
 }
