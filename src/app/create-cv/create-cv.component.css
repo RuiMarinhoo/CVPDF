@@ -48,6 +48,10 @@ img {
   margin-right: 20px;
 }
 
+.activeImg{
+  border: 1px solid black;
+}
+
 .zoomIcon{
   position: absolute;
   top: 5px;
@@ -223,8 +227,16 @@ img {
 
 .allInputs input{
   width: 100%;
+  margin-right: 2%;
 }
 
+.allInputs .LS{
+  width: 65%;
+  margin-right: 5%;
+}
+.allInputs .LSR{
+  width: 5%;
+}
 
 .fotoInput{
   display: flex;

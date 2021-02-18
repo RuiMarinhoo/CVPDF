@@ -48,7 +48,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   htmlSrc: SafeResourceUrl;
 
   // template = '';
-  template = 'f1';
+  template = '';
   cvView = false;
 
   faSearch = faSearch;
@@ -109,7 +109,8 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   loadLists(){
-    const vars: any = this.layout.getVariaveis(this.template);
+    const vars: any = this.layout.getVariaveis();
+    console.log(vars);
     vars.forEach( val => {
       this.toAdd.push(val);
     });
@@ -127,8 +128,8 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
       this.onCV[i].value.push({data: '', local: '', texto: ''});
     }
   }
-  removeItem(item){
-    this.onCV.splice(item, 1);
+  removeItem(array, item){
+    array.splice(item, 1);
   }
 
   onInputChange(value, index){
@@ -156,8 +157,12 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   async getTemplateRender(){
-    // console.log(this.onCV);
-    const html = this.layout.getHTML(this.onCV);
+    console.log(this.onCV);
+    const toPDF = [];
+    this.onCV.forEach(val => {
+      toPDF.push(val);
+    });
+    const html = this.layout.getHTML(this.template, toPDF);
     this.url = await this.dataS.renderPDF(this.template, html);
     // console.log(this.url);
     // console.log(this.url);
@@ -167,7 +172,12 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   }
 
   async getPDF(){
-    const html = this.layout.getHTML(this.onCV);
+    console.log(this.onCV);
+    const toPDF = [];
+    this.onCV.forEach(val => {
+      toPDF.push(val);
+    });
+    const html = this.layout.getHTML(this.template, toPDF);
     this.url = await this.dataS.getPDF(this.template, html);
     // console.log(this.url);
     const linkSource = 'data:application/pdf;base64,' + this.url;
@@ -180,10 +190,11 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
 
   changeTemplate(template){
     this.template = template;
-    this.getTemplateRender();
   }
   selectTemplate(){
     this.stateCreation = 1;
+    this.getTemplateRender();
+    this.loadLists();
   }
 
   itemOnCV(item){
@@ -196,8 +207,6 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // console.log(window.innerHeight);
-    this.getTemplateRender();
-    this.loadLists();
     const w = window.innerWidth;
     let contWidth;
     let nSlides;

@@ -9,7 +9,7 @@ export class CVDataService {
   allCvData: any;
 
   urlServer = 'https://cvserverapp.herokuapp.com/generateCV';
-  // urlServer = 'http://localhost:3000/generateCV/render';
+  // urlServer = 'http://localhost:3000/generateCV';
   urlRender = '/render';
 
   constructor(private http: HttpClient) { }
@@ -17,7 +17,7 @@ export class CVDataService {
   setData(data){
     this.allCvData = data;
   }
-  getData(data){
+  getData(){
     return this.allCvData;
   }
 

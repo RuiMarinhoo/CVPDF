@@ -4,16 +4,16 @@
   <div #contImgs class="container" *ngIf="stateCreation === 0">
     <div class="row">
       <div class="col-12">
-        <drag-scroll [snap-disabled]="true" [style]="{height: imgHlayoutsCont + 'px'}">
-          <img [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/cvP.gif" (click)="changeTemplate('f1')"/>
-          <img [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/cvP.gif" />
-          <img [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/cvP.gif" />
-          <img [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/cvP.gif" />
-          <img [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/cvP.gif" />
-        </drag-scroll>
-        <div class="btnCreate">
-          <div class="btn btn-2" (click)="selectTemplate()">
-            Crie o seu CV
+        <div style="text-align: center;">
+          <p  style="font-size: 14pt">Escolha o layout</p>
+          <drag-scroll [snap-disabled]="true" [style]="{height: imgHlayoutsCont + 'px'}">
+            <img [ngClass]="template === 'f1' ? 'activeImg' : ''" [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/f1.jpg" (click)="changeTemplate('f1')"/>
+            <img [ngClass]="template  === 'f2' ? 'activeImg' : ''" [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/f2.jpg" (click)="changeTemplate('f2')"/>
+          </drag-scroll>
+          <div class="btnCreate" *ngIf="template">
+            <div class="btn btn-2" (click)="selectTemplate()">
+              Crie o seu CV
+            </div>
           </div>
         </div>
       </div>
@@ -104,42 +104,58 @@
                             <input type="text" [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()">
                           </div>
                           <div *ngIf="item.control === 'Perfil'">
-                            <textarea [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()" rows="4"></textarea>
+                            <textarea [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()" rows="4" style="width: 100%;"></textarea>
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="['Linguas', 'Skills'].includes(item.control)">
                           <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j">
-                            <input type="text" [(ngModel)]="onCV[i].value[j].tipo" (focusout)="getTemplateRender()">
-                            <input type="radio" [checked]="onCV[i].value[j].value >= 1" (click)="onCV[i].value[j].value = 1" (focusout)="getTemplateRender()"/>
-                            <input type="radio" [checked]="onCV[i].value[j].value >= 2" (click)="onCV[i].value[j].value = 2" (focusout)="getTemplateRender()"/>
-                            <input type="radio" [checked]="onCV[i].value[j].value >= 3" (click)="onCV[i].value[j].value = 3" (focusout)="getTemplateRender()"/>
-                            <input type="radio" [checked]="onCV[i].value[j].value >= 4" (click)="onCV[i].value[j].value = 4" (focusout)="getTemplateRender()"/>
-                            <input type="radio" [checked]="onCV[i].value[j].value >= 5" (click)="onCV[i].value[j].value = 5" (focusout)="getTemplateRender()"/>
+                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">
+                            <input class="LS" type="text" [(ngModel)]="onCV[i].value[j].tipo" (focusout)="getTemplateRender()">
+                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 1" (click)="onCV[i].value[j].value = 1" (focusout)="getTemplateRender()"/>
+                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 2" (click)="onCV[i].value[j].value = 2" (focusout)="getTemplateRender()"/>
+                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 3" (click)="onCV[i].value[j].value = 3" (focusout)="getTemplateRender()"/>
+                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 4" (click)="onCV[i].value[j].value = 4" (focusout)="getTemplateRender()"/>
+                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 5" (click)="onCV[i].value[j].value = 5" (focusout)="getTemplateRender()"/>
+
+                            <div>
+                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
+                            </div>
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="['Personalidade', 'Certificados'].includes(item.control)">
                           <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j">
+                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">
                             <input type="text" [(ngModel)]="onCV[i].value[j].value" (focusout)="getTemplateRender()">
+
+                            <div>
+                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
+                            </div>
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="['Hobbies'].includes(item.control)">
                           <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j">
+                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">
                             <input type="text" [(ngModel)]="onCV[i].value[j].value" (focusout)="getTemplateRender()">
+
+                            <div>
+                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
+                            </div>
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="['Educacao', 'Experiencia'].includes(item.control)">
                           <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j">
-                            <input type="text" [(ngModel)]="onCV[i].value[j].data" (focusout)="getTemplateRender()">
-                            <input type="text" [(ngModel)]="onCV[i].value[j].local" (focusout)="getTemplateRender()">
-                            <input type="text" [(ngModel)]="onCV[i].value[j].texto" (focusout)="getTemplateRender()">
+                          <div *ngFor="let val of item.value; index as j" style="position: relative">
+                            <textarea [(ngModel)]="onCV[i].value[j].data" (focusout)="getTemplateRender()" rows="1" style="width: 100%;"></textarea>
+                            <textarea [(ngModel)]="onCV[i].value[j].local" (focusout)="getTemplateRender()" rows="1" style="width: 100%;"></textarea>
+                            <textarea [(ngModel)]="onCV[i].value[j].texto" (focusout)="getTemplateRender()" rows="1" style="width: 100%; margin-bottom: 30px;"></textarea>
+
+                            <div style="position: absolute; top: -20px; right: 10px;">
+                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
+                            </div>
                           </div>
                         </ng-container>
 
