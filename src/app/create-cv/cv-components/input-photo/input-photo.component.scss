@@ -1,0 +1,16 @@
+.photo-container {
+  display: flex;
+
+  .photo-cropper {
+    width: 50%;
+  }
+
+  .photo-cropped {
+    width: 50%;
+    height: fit-content;
+
+    &.photo-rounded {
+      border-radius: 50%;
+    }
+  }
+}

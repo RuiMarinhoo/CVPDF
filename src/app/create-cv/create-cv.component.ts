@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {F1Component} from '../allTemplates/f1/f1.component';
 import {FormBuilder} from '@angular/forms';
-import {CVDataService} from '../cvdata.service';
+import {RestApiService} from '../rest-api.service';
 import {DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { faSearch, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
@@ -18,14 +18,11 @@ import {LayoutService} from './templates/layout.service';
 import {loadConfigurationFromPath} from 'tslint/lib/configuration';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 
-const componentsRegistry = {
-  F1: F1Component
-};
 
 @Component({
   selector: 'app-create-cv',
   templateUrl: './create-cv.component.html',
-  styleUrls: ['./create-cv.component.css']
+  styleUrls: ['./create-cv.component.scss']
 })
 export class CreateCVComponent implements OnInit, AfterViewInit {
 
@@ -62,12 +59,42 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
   croppedImage: any = '';
   onCV: any = [];
 
+  layoutcv = {
+    type: 'f1',
+    columns: [{
+      components: [{
+        type: 'photo',
+        value: null,
+      }, {
+        type: 'text',
+        value: null,
+      }, {
+        type: 'list-skills',
+        value: null,
+      }, {
+        type: 'list-topics',
+        value: null,
+      }, {
+        type: 'list-icons',
+        value: null,
+      }]
+    }],
+  };
+
+  tab = 0;
+
   constructor(
     private componentFactory: ComponentFactoryResolver,
     private formBuilder: FormBuilder,
-    private dataS: CVDataService,
+    private apiService: RestApiService,
     public sanitizer: DomSanitizer,
     private layout: LayoutService) {
+    console.log(this.layoutcv);
+  }
+
+  addValue(component: any, data: any){
+    component.value = data;
+    console.log(this.layoutcv);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -163,7 +190,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
       toPDF.push(val);
     });
     const html = this.layout.getHTML(this.template, toPDF);
-    this.url = await this.dataS.renderPDF(this.template, html);
+    this.url = await this.apiService.renderPDF(this.template, html);
     // console.log(this.url);
     // console.log(this.url);
     // this.htmlSrc = this.sanitizer.bypassSecurityTrustHtml(this.url);
@@ -178,7 +205,7 @@ export class CreateCVComponent implements OnInit, AfterViewInit {
       toPDF.push(val);
     });
     const html = this.layout.getHTML(this.template, toPDF);
-    this.url = await this.dataS.getPDF(this.template, html);
+    this.url = await this.apiService.getPDF(this.template, html);
     // console.log(this.url);
     const linkSource = 'data:application/pdf;base64,' + this.url;
     const downloadLink = document.createElement('a');

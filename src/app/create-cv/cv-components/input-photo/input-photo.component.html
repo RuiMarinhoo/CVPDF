@@ -1,0 +1,33 @@
+<div class="row mb-3">
+  <div class="col-12">
+    <div class="d-flex justify-content-between">
+      <h3 class="text-primary font-weight-bold">Photo</h3>
+      <div class="d-flex" role="button">
+        <i class="ri-2x ri-close-circle-fill text-danger"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <!--                        <input type="text" [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()">-->
+  <label for="check"> Rounded Photo
+    <input id="check" type="checkbox" [(ngModel)]="input.round" [ngModelOptions]="{standalone: true}"/>
+  </label>
+  <input type="file" (change)="fileChangeEvent($event)" />
+
+  <div class="photo-container">
+    <image-cropper
+      class="photo-cropper"
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="1 / 1"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+
+    <img class="photo-cropped" [src]="croppedImage ? croppedImage : foto" [class.photo-rounded]="input.round" />
+  </div>
+</div>

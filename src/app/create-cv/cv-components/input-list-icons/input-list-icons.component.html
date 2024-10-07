@@ -1,0 +1,87 @@
+<div class="row mb-3">
+  <div class="col-12">
+    <div class="d-flex justify-content-between">
+      <h3 class="text-primary font-weight-bold">List of Icons</h3>
+      <div class="d-flex" role="button">
+        <i class="ri-2x ri-close-circle-fill text-danger"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Title</span>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="input.title">
+      <div class="input-group-append">
+        <div class="d-flex justify-content-end">
+          <div class="btn-group mr-2">
+            <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="input.align_value === 0" (click)="input.align_value = 0">
+              <i class="ri-lg ri-align-left"></i>
+            </div>
+            <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="input.align_value === 1" (click)="input.align_value = 1">
+              <i class="ri-lg ri-align-center"></i>
+            </div>
+            <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="input.align_value === 2" (click)="input.align_value = 2">
+              <i class="ri-lg ri-align-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="item-in-component mb-2" *ngFor="let item of input.list; last as last">
+  <div class="row">
+    <div class="col-12">
+      <div class="input-group">
+        <input type="text" class="form-control mr-2" [(ngModel)]="input.title">
+        <div class="dropdown mr-2" data-toggle="dropdown">
+          <button class="d-flex align-items-center btn btn-primary dropdown-toggle btn-sm h-100" (click)="item.dropdown = !item.dropdown">
+            <i class="ri-lg {{item.icon}} mr-2"></i>
+          </button>
+          <div class="dropdown-menu flex-wrap w-100" style="min-width: 170px" [class.show]="item.dropdown">
+            <ng-container *ngFor="let icon of icons;">
+              <div class="dropdown-item" (click)="test(); item.icon = icon">
+                <i class="ri-lg {{icon}}"></i>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item">Action - 1</button>
+            <button class="dropdown-item">Another Action</button>
+            <button class="dropdown-item">Something else is here</button>
+          </div>
+        </div>
+
+
+        <div class="input-group-prepend">
+          <div class="btn-group mr-2">
+            <div class="d-flex align-items-center btn btn-primary btn-sm mr-3" [class.active]="input.align_value === 2" (click)="input.align_value = 2">
+              <i class="ri-lg ri-text"></i>
+            </div>
+          </div>
+          <div class="d-flex align-items-center" role="button">
+            <i class="ri-2x ri-close-circle-fill text-danger"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="btn btn-success btn-sm btn-block" (click)="addItem()">ADD</div>
+  </div>
+</div>

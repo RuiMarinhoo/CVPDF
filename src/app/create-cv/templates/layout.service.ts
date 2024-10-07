@@ -17,6 +17,36 @@ export class LayoutService {
     'Certificados',
     'Skills'
   ];
+  layout = {
+    type: 'f1',
+    colums: [],
+  };
+  components = [
+    'photo',
+    'text',
+    'list'
+  ];
+  forms = [
+    {
+      type: 'photo',
+      value: '',
+    },
+    {
+      type: 'text',
+      title: 'Profile',
+      value: '',
+      data: [{
+        value: ''
+      }]
+    },
+    {
+      type: 'list',
+      title: 'Profile',
+      data: [{
+        value: ''
+      }]
+    }
+  ];
 
   constructor() { }
 

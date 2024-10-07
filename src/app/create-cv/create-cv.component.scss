@@ -1,4 +1,33 @@
 
+.formCV {
+  height: 100%;
+
+  .colH {
+    height: 100%;
+  }
+  .nav{
+    flex-wrap: nowrap!important;
+
+    .nav-item{
+      width: 100%;
+
+      .nav-link {
+        border: 1px solid #dee2e6;
+        background-color: #dee2e6;
+
+        &.active {
+          background-color: white;
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    background-color: white;
+    padding: 15px;
+  }
+}
+
 #createCV{
   padding-top: 100px;
   height: 100%;
@@ -14,15 +43,10 @@
   box-shadow: 8px 8px 30px 0px rgba(0,0,0,0.3);
 }
 
-.formCV{
-  height: 100%;
-}
-.formCV .colH{
-  height: 100%;
-}
 
 .formCV .colH > div:nth-child(2){
-  height: 25%;
+  //height: 25%;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -111,30 +135,30 @@ img {
   width: 100%;
   border-radius: 0px;
 }
-/deep/ .mat-expansion-panel-body {
+ .mat-expansion-panel-body {
   padding: 0 15px 15px!important;
 }
 
-/deep/ .mat-tab-header {
+ .mat-tab-header {
   background: aliceblue;
   border-radius: 10px 10px 0 0;
 }
-/deep/ .mat-tab-body-content {
+ .mat-tab-body-content {
   /*overflow: hidden!important;*/
 }
-/deep/ .mat-tab-body-content::-webkit-scrollbar {
+ .mat-tab-body-content::-webkit-scrollbar {
   width: 10px;
 }
 /* Track */
-/deep/ .mat-tab-body-content::-webkit-scrollbar-track {
+ .mat-tab-body-content::-webkit-scrollbar-track {
   background: #cdcdcd;
 }
 /* Handle */
-/deep/ .mat-tab-body-content::-webkit-scrollbar-thumb {
+ .mat-tab-body-content::-webkit-scrollbar-thumb {
   background: #3c6bb1;
 }
 /* Handle on hover */
-/deep/ .mat-tab-body-content::-webkit-scrollbar-thumb:hover {
+ .mat-tab-body-content::-webkit-scrollbar-thumb:hover {
   background: #1b5bbc;
 }
 
@@ -266,18 +290,18 @@ img {
   width: 80px;
 }
 
-/deep/ .mat-slide-toggle .mat-slide-toggle-bar, /deep/ .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+ .mat-slide-toggle .mat-slide-toggle-bar, .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
   background-color: rgba(60, 107, 177, .54);
 }
 
-/deep/ .mat-slide-toggle .mat-slide-toggle-thumb, /deep/ .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+.mat-slide-toggle .mat-slide-toggle-thumb, .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
   background-color: #3c6bb1;
 }
 
-/deep/ .mat-slide-toggle.mat-checked .mat-ripple-element {
+ .mat-slide-toggle.mat-checked .mat-ripple-element {
   background-color: #3c6bb1;
 }
-/deep/ .mat-slide-toggle:not(.mat-checked) .mat-ripple-element {
+ .mat-slide-toggle:not(.mat-checked) .mat-ripple-element {
   background-color: #3c6bb1;
 }
 
@@ -288,9 +312,6 @@ img {
   bottom: 10%;
 }
 .btn {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   padding: 10px 19px;
   text-align: center;
   text-transform: uppercase;
@@ -301,7 +322,6 @@ img {
   /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
-  margin-top: 50px;
   background-image: linear-gradient(to right, #8ccede 0%, #6d8cc3 51%, #8ccede 100%);
 }
 
@@ -337,3 +357,4 @@ img {
     display: none;
   }
 }
+

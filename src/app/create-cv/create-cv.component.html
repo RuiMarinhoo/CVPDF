@@ -5,14 +5,14 @@
     <div class="row">
       <div class="col-12">
         <div style="text-align: center;">
-          <p  style="font-size: 14pt">Escolha o layout</p>
+          <p  style="font-size: 14pt">Choose a template base</p>
           <drag-scroll [snap-disabled]="true" [style]="{height: imgHlayoutsCont + 'px'}">
             <img [ngClass]="template === 'f1' ? 'activeImg' : ''" [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/f1.jpg" (click)="changeTemplate('f1')"/>
             <img [ngClass]="template  === 'f2' ? 'activeImg' : ''" [style]="{width: imgWlayouts + 'px'}" drag-scroll-item src="assets/img/f2.jpg" (click)="changeTemplate('f2')"/>
           </drag-scroll>
           <div class="btnCreate" *ngIf="template">
             <div class="btn btn-2" (click)="selectTemplate()">
-              Crie o seu CV
+              Ready to edit
             </div>
           </div>
         </div>
@@ -21,162 +21,197 @@
   </div>
   <div class="container" *ngIf="stateCreation === 1">
     <div class="row formCV">
-      <div class="col-12 col-lg-7 colH">
+      <div class="col-12 col-lg-7 colH d-flex flex-column h-100">
 
-        <mat-tab-group>
-
-          <mat-tab label="Adicionar ao CV">
-            <div>
-              <div class="example-container">
-                <div class="example-list">
-                  <div class="example-box-to-add" [ngClass]="{'inList': itemOnCV(item)}" *ngFor="let item of toAdd; index as i">{{item}}<fa-icon [icon]="faPlusCircle" (click)="addToCV(item)"></fa-icon></div>
-                </div>
-              </div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <div class="d-flex justify-content-between nav-link w-100" [class.active]="tab === 0" (click)="tab = 0">
+              <span>Left Column</span>
+              <fa-icon [icon]="faPlusCircle" (click)="$event.stopPropagation()" data-toggle="tooltip" data-placement="top" title="Add component"></fa-icon>
             </div>
-          </mat-tab>
-
-
-          <mat-tab label="Editar CV">
-            <div>
-              <div class="example-container">
-                <div
-                  cdkDropList
-                  [cdkDropListData]="onCV"
-                  class="example-list"
-                  (cdkDropListDropped)="drop($event)"
-                  [cdkDropListEnterPredicate]="noReturnPredicate">
-                  <div class="example-box" *ngFor="let item of onCV; index as i" cdkDrag>
-                    <div class="controlInput">
-                      <div class="example-handle" cdkDragHandle>
-                        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                          <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                      </div>
-                      <section class="example-section">
-                        <mat-slide-toggle
-                          class="example-margin"
-                          [(ngModel)]="item.position"
-                          (click)="getTemplateRender()">
-                          {{item.position ? 'Right' : 'Left'}}
-                        </mat-slide-toggle>
-                      </section>
-                      <div>
-                        <fa-icon [icon]="faTimes" (click)="removeToCV(i)"></fa-icon>
-                      </div>
-                    </div>
-                    <mat-expansion-panel>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          {{item.control}}
-                        </mat-panel-title>
-                        <!--                    <mat-panel-description>-->
-                        <!--                      This is a summary of the content-->
-                        <!--                    </mat-panel-description>-->
-                      </mat-expansion-panel-header>
-
-                      <div class="allInputs">
-
-                        <ng-container *ngIf="['Foto'].includes(item.control)">
-                          <div>
-                            <!--                        <input type="text" [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()">-->
-                            <input type="file" (change)="fileChangeEvent($event)" />
-
-                            <div class="fotoInput">
-                              <image-cropper
-                                [imageChangedEvent]="imageChangedEvent"
-                                [maintainAspectRatio]="true"
-                                [aspectRatio]="1 / 1"
-                                format="png"
-                                (imageCropped)="imageCropped($event)"
-                                (imageLoaded)="imageLoaded()"
-                                (cropperReady)="cropperReady()"
-                                (loadImageFailed)="loadImageFailed()"
-                              ></image-cropper>
-
-                              <img [src]="croppedImage" />
-                            </div>
-                          </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="['Nome', 'Morada', 'Contacto', 'E-mail', 'Perfil'].includes(item.control)">
-                          <div *ngIf="item.control !== 'Perfil'">
-                            <input type="text" [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()">
-                          </div>
-                          <div *ngIf="item.control === 'Perfil'">
-                            <textarea [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()" rows="4" style="width: 100%;"></textarea>
-                          </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="['Linguas', 'Skills'].includes(item.control)">
-                          <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">
-                            <input class="LS" type="text" [(ngModel)]="onCV[i].value[j].tipo" (focusout)="getTemplateRender()">
-                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 1" (click)="onCV[i].value[j].value = 1" (focusout)="getTemplateRender()"/>
-                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 2" (click)="onCV[i].value[j].value = 2" (focusout)="getTemplateRender()"/>
-                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 3" (click)="onCV[i].value[j].value = 3" (focusout)="getTemplateRender()"/>
-                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 4" (click)="onCV[i].value[j].value = 4" (focusout)="getTemplateRender()"/>
-                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 5" (click)="onCV[i].value[j].value = 5" (focusout)="getTemplateRender()"/>
-
-                            <div>
-                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
-                            </div>
-                          </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="['Personalidade', 'Certificados'].includes(item.control)">
-                          <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">
-                            <input type="text" [(ngModel)]="onCV[i].value[j].value" (focusout)="getTemplateRender()">
-
-                            <div>
-                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
-                            </div>
-                          </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="['Hobbies'].includes(item.control)">
-                          <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">
-                            <input type="text" [(ngModel)]="onCV[i].value[j].value" (focusout)="getTemplateRender()">
-
-                            <div>
-                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
-                            </div>
-                          </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="['Educacao', 'Experiencia'].includes(item.control)">
-                          <div (click)="addItem(i)">ADD</div>
-                          <div *ngFor="let val of item.value; index as j" style="position: relative">
-                            <textarea [(ngModel)]="onCV[i].value[j].data" (focusout)="getTemplateRender()" rows="1" style="width: 100%;"></textarea>
-                            <textarea [(ngModel)]="onCV[i].value[j].local" (focusout)="getTemplateRender()" rows="1" style="width: 100%;"></textarea>
-                            <textarea [(ngModel)]="onCV[i].value[j].texto" (focusout)="getTemplateRender()" rows="1" style="width: 100%; margin-bottom: 30px;"></textarea>
-
-                            <div style="position: absolute; top: -20px; right: 10px;">
-                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>
-                            </div>
-                          </div>
-                        </ng-container>
-
-                      </div>
-
-                    </mat-expansion-panel>
-                  </div>
-                </div>
-              </div>
+          </li>
+          <li class="nav-item">
+            <div class="d-flex justify-content-between nav-link w-100" [class.active]="tab === 1" (click)="tab = 1">
+              <span>Right Column</span>
+              <fa-icon [icon]="faPlusCircle" (click)="$event.stopPropagation()"></fa-icon>
             </div>
-          </mat-tab>
+          </li>
+        </ul>
+        <div class="tab-content pt-5" id="tab-content">
+          <div class="tab-pane" [class.active]="tab === 0">
+            <ng-container *ngFor="let columns of layoutcv.columns">
+              <ng-container *ngFor="let component of columns.components; let last = last;">
+                <ng-container [ngSwitch]="component.type">
+                  <app-input-photo *ngSwitchCase="'photo'" (itemEvent)="addValue(component, $event)"></app-input-photo>
+                  <app-input-text *ngSwitchCase="'text'" (itemEvent)="addValue(component, $event)"></app-input-text>
+                  <app-input-list-skills *ngSwitchCase="'list-skills'" (itemEvent)="addValue(component, $event)"></app-input-list-skills>
+                  <app-input-list-topics *ngSwitchCase="'list-topics'" (itemEvent)="addValue(component, $event)"></app-input-list-topics>
+                  <app-input-list-icons *ngSwitchCase="'list-icons'" (itemEvent)="addValue(component, $event)"></app-input-list-icons>
+                </ng-container>
+                <hr *ngIf="!last" style="margin-left: -15px; margin-right: -15px">
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="tab-pane" [class.active]="tab === 1">Right Column</div>
+        </div>
 
-        </mat-tab-group>
+
+<!--        <mat-tab-group>-->
+
+<!--          <mat-tab label="Adicionar ao CV">-->
+<!--            <div>-->
+<!--              <div class="example-container">-->
+<!--                <div class="example-list">-->
+<!--                  <div class="example-box-to-add" [ngClass]="{'inList': itemOnCV(item)}" *ngFor="let item of toAdd; index as i">{{item}}<fa-icon [icon]="faPlusCircle" (click)="addToCV(item)"></fa-icon></div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </mat-tab>-->
+
+
+<!--          <mat-tab label="Editar CV">-->
+<!--            <div>-->
+<!--              <div class="example-container">-->
+<!--                <div-->
+<!--                  cdkDropList-->
+<!--                  [cdkDropListData]="onCV"-->
+<!--                  class="example-list"-->
+<!--                  (cdkDropListDropped)="drop($event)"-->
+<!--                  [cdkDropListEnterPredicate]="noReturnPredicate">-->
+<!--                  <div class="example-box" *ngFor="let item of onCV; index as i" cdkDrag>-->
+<!--                    <div class="controlInput">-->
+<!--                      <div class="example-handle" cdkDragHandle>-->
+<!--                        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                          <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>-->
+<!--                          <path d="M0 0h24v24H0z" fill="none"></path>-->
+<!--                        </svg>-->
+<!--                      </div>-->
+<!--                      <section class="example-section">-->
+<!--                        <mat-slide-toggle-->
+<!--                          class="example-margin"-->
+<!--                          [(ngModel)]="item.position"-->
+<!--                          (click)="getTemplateRender()">-->
+<!--                          {{item.position ? 'Right' : 'Left'}}-->
+<!--                        </mat-slide-toggle>-->
+<!--                      </section>-->
+<!--                      <div>-->
+<!--                        <fa-icon [icon]="faTimes" (click)="removeToCV(i)"></fa-icon>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <mat-expansion-panel>-->
+<!--                      <mat-expansion-panel-header>-->
+<!--                        <mat-panel-title>-->
+<!--                          {{item.control}}-->
+<!--                        </mat-panel-title>-->
+<!--                        &lt;!&ndash;                    <mat-panel-description>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                      This is a summary of the content&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    </mat-panel-description>&ndash;&gt;-->
+<!--                      </mat-expansion-panel-header>-->
+
+<!--                      <div class="allInputs">-->
+
+<!--                        <ng-container *ngIf="['Foto'].includes(item.control)">-->
+<!--                          <div>-->
+<!--                            &lt;!&ndash;                        <input type="text" [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()">&ndash;&gt;-->
+<!--                            <input type="file" (change)="fileChangeEvent($event)" />-->
+
+<!--                            <div class="fotoInput">-->
+<!--                              <image-cropper-->
+<!--                                [imageChangedEvent]="imageChangedEvent"-->
+<!--                                [maintainAspectRatio]="true"-->
+<!--                                [aspectRatio]="1 / 1"-->
+<!--                                format="png"-->
+<!--                                (imageCropped)="imageCropped($event)"-->
+<!--                                (imageLoaded)="imageLoaded()"-->
+<!--                                (cropperReady)="cropperReady()"-->
+<!--                                (loadImageFailed)="loadImageFailed()"-->
+<!--                              ></image-cropper>-->
+
+<!--                              <img [src]="croppedImage" />-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                        <ng-container *ngIf="['Nome', 'Morada', 'Contacto', 'E-mail', 'Perfil'].includes(item.control)">-->
+<!--                          <div *ngIf="item.control !== 'Perfil'">-->
+<!--                            <input type="text" [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()">-->
+<!--                          </div>-->
+<!--                          <div *ngIf="item.control === 'Perfil'">-->
+<!--                            <textarea [(ngModel)]="onCV[i].value" (focusout)="getTemplateRender()" rows="4" style="width: 100%;"></textarea>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                        <ng-container *ngIf="['Linguas', 'Skills'].includes(item.control)">-->
+<!--                          <div (click)="addItem(i)">ADD</div>-->
+<!--                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">-->
+<!--                            <input class="LS" type="text" [(ngModel)]="onCV[i].value[j].tipo" (focusout)="getTemplateRender()">-->
+<!--                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 1" (click)="onCV[i].value[j].value = 1" (focusout)="getTemplateRender()"/>-->
+<!--                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 2" (click)="onCV[i].value[j].value = 2" (focusout)="getTemplateRender()"/>-->
+<!--                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 3" (click)="onCV[i].value[j].value = 3" (focusout)="getTemplateRender()"/>-->
+<!--                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 4" (click)="onCV[i].value[j].value = 4" (focusout)="getTemplateRender()"/>-->
+<!--                            <input class="LSR" type="radio" [checked]="onCV[i].value[j].value >= 5" (click)="onCV[i].value[j].value = 5" (focusout)="getTemplateRender()"/>-->
+
+<!--                            <div>-->
+<!--                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                        <ng-container *ngIf="['Personalidade', 'Certificados'].includes(item.control)">-->
+<!--                          <div (click)="addItem(i)">ADD</div>-->
+<!--                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">-->
+<!--                            <input type="text" [(ngModel)]="onCV[i].value[j].value" (focusout)="getTemplateRender()">-->
+
+<!--                            <div>-->
+<!--                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                        <ng-container *ngIf="['Hobbies'].includes(item.control)">-->
+<!--                          <div (click)="addItem(i)">ADD</div>-->
+<!--                          <div *ngFor="let val of item.value; index as j" style="display: flex; margin-bottom: 10px;">-->
+<!--                            <input type="text" [(ngModel)]="onCV[i].value[j].value" (focusout)="getTemplateRender()">-->
+
+<!--                            <div>-->
+<!--                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                        <ng-container *ngIf="['Educacao', 'Experiencia'].includes(item.control)">-->
+<!--                          <div (click)="addItem(i)">ADD</div>-->
+<!--                          <div *ngFor="let val of item.value; index as j" style="position: relative">-->
+<!--                            <textarea [(ngModel)]="onCV[i].value[j].data" (focusout)="getTemplateRender()" rows="1" style="width: 100%;"></textarea>-->
+<!--                            <textarea [(ngModel)]="onCV[i].value[j].local" (focusout)="getTemplateRender()" rows="1" style="width: 100%;"></textarea>-->
+<!--                            <textarea [(ngModel)]="onCV[i].value[j].texto" (focusout)="getTemplateRender()" rows="1" style="width: 100%; margin-bottom: 30px;"></textarea>-->
+
+<!--                            <div style="position: absolute; top: -20px; right: 10px;">-->
+<!--                              <fa-icon [icon]="faTimes" (click)="removeItem(item.value, j)"></fa-icon>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                      </div>-->
+
+<!--                    </mat-expansion-panel>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </mat-tab>-->
+
+<!--        </mat-tab-group>-->
 
       </div>
       <div class="d-none d-lg-block col-lg-5 showCV">
-        <div class="zoomIcon" (click)="cvView = !cvView"><fa-icon [icon]="faSearch"></fa-icon></div>
-        <!--          <iframe class="cvView" frameBorder="0" [srcdoc]="htmlSrc"></iframe>-->
-        <img [src]="htmlSrc"/>
-        <div class="btn btn-1" (click)="getPDF()">
-          GET CV
+        <div class="d-flex flex-column">
+          <div class="zoomIcon" (click)="cvView = !cvView"><fa-icon [icon]="faSearch"></fa-icon></div>
+          <!--          <iframe class="cvView" frameBorder="0" [srcdoc]="htmlSrc"></iframe>-->
+          <img [src]="htmlSrc"/>
+          <div class="btn btn-1 mt-4" (click)="getPDF()">
+            GET CV
+          </div>
         </div>
       </div>
     </div>

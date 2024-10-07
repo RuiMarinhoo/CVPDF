@@ -18,6 +18,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
+import { InputPhotoComponent } from './create-cv/cv-components/input-photo/input-photo.component';
+import { InputTextComponent } from './create-cv/cv-components/input-text/input-text.component';
+import { InputListSkillsComponent } from './create-cv/cv-components/input-list-skills/input-list-skills.component';
+import {InputListTopicsComponent} from './create-cv/cv-components/input-list-topics/input-list-topics.component';
+import {InputListIconsComponent} from './create-cv/cv-components/input-list-icons/input-list-icons.component';
+
+import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
@@ -26,7 +34,12 @@ import {MatTabsModule} from '@angular/material/tabs';
     HomeComponent,
     TemplateCVComponent,
     SafeHtmlPipe,
-    CreateCVComponent
+    CreateCVComponent,
+    InputPhotoComponent,
+    InputTextComponent,
+    InputListSkillsComponent,
+    InputListTopicsComponent,
+    InputListIconsComponent
   ],
   entryComponents: [F1Component],
   imports: [

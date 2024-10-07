@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CVDataService} from '../../cvdata.service';
+import {RestApiService} from '../../rest-api.service';
 import {Subject} from 'rxjs';
 
 @Component({
@@ -13,7 +13,7 @@ export class F1Component implements OnInit {
     name: 'teste',
   };
 
-  constructor(private dataS: CVDataService) { }
+  constructor(private dataS: RestApiService) { }
 
   getData(){
     this.data = this.dataS.allCvData;
