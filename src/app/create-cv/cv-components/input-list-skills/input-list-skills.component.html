@@ -1,0 +1,84 @@
+<div class="row mb-3">
+  <div class="col-12">
+    <div class="d-flex justify-content-between">
+      <h3 class="text-primary font-weight-bold">List of Skills</h3>
+      <div class="d-flex" role="button">
+        <i class="ri-2x ri-close-circle-fill text-danger"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Title</span>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="input.title">
+      <div class="input-group-append">
+        <div class="d-flex justify-content-end">
+          <div class="btn-group mr-2">
+            <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="input.align_value === 0" (click)="input.align_value = 0">
+              <i class="ri-lg ri-align-left"></i>
+            </div>
+            <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="input.align_value === 1" (click)="input.align_value = 1">
+              <i class="ri-lg ri-align-center"></i>
+            </div>
+            <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="input.align_value === 2" (click)="input.align_value = 2">
+              <i class="ri-lg ri-align-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="item-in-component mb-2" *ngFor="let item of input.list; last as last">
+  <div class="row">
+    <div class="col-12">
+      <div class="input-group">
+        <input class="form-control mr-2" type="text" [(ngModel)]="item.text">
+        <div class="input-group-append">
+          <div class="mr-2" style="display: flex;">
+            <input class="mr-1" type="radio" [checked]="item.value >= 1" (click)="item.value = 1"/>
+            <input class="mr-1" type="radio" [checked]="item.value >= 2" (click)="item.value = 2"/>
+            <input class="mr-1" type="radio" [checked]="item.value >= 3" (click)="item.value = 3"/>
+            <input class="mr-1" type="radio" [checked]="item.value >= 4" (click)="item.value = 4"/>
+            <input type="radio" [checked]="item.value >= 5" (click)="item.value = 5"/>
+          </div>
+        </div>
+        <div class="input-group-append">
+          <div class="d-flex justify-content-end">
+            <div class="btn-group mr-2">
+              <div class="d-flex align-items-center btn btn-primary btn-sm" *ngFor="let align of aligns; index as i" [class.active]="item.align_value === i" (click)="item.align_value = i">
+                <i class="ri-lg {{align.text}}"></i>
+              </div>
+            </div>
+            <div class="btn-group mr-2">
+              <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="item.break_value" (click)="item.break_value = !item.break_value">
+                <i class="ri-lg ri-text-wrap"></i>
+              </div>
+            </div>
+            <div class="btn-group mr-3">
+              <div class="d-flex align-items-center btn btn-primary btn-sm" [class.active]="item.dots_value" (click)="item.dots_value = !item.dots_value">
+                <i class="ri-lg ri-git-commit-line"></i>
+              </div>
+            </div>
+            <div class="d-flex align-items-center" role="button">
+              <i class="ri-2x ri-close-circle-fill text-danger"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="btn btn-success btn-sm btn-block" (click)="addItem()">ADD</div>
+  </div>
+</div>

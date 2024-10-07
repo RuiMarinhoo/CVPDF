@@ -1,0 +1,24 @@
+<div class="row mb-3">
+  <div class="col-12">
+    <div class="d-flex justify-content-between">
+      <h3 class="text-primary font-weight-bold">{{input.type === 'input' ? 'Simple Text': 'Text'}}</h3>
+      <div class="d-flex" role="button">
+        <i class="ri-2x ri-close-circle-fill text-danger"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="input.type === 'input'">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">
+        <input type="checkbox" aria-label="Checkbox for following text input">
+      </span>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="input.title">
+    <input type="text" class="form-control w-50" [(ngModel)]="input.value">
+  </div>
+</ng-container>
+<ng-container *ngIf="input.type === 'text'">
+  <textarea class="form-control" [(ngModel)]="input.value" rows="4"></textarea>
+</ng-container>
